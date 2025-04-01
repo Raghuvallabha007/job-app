@@ -7,4 +7,5 @@ public interface ReviewService {
     boolean addReview(Long companyId, Review review);
     Review getReviewById(Long companyId, Long reviewId);
     Review updateReview(Long companyId, Long reviewId, Review review);
+    boolean deleteReview(Long companyId, Long reviewId);
 }
