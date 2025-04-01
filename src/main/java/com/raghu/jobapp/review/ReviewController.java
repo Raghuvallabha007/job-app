@@ -29,10 +29,18 @@ public class ReviewController {
 
     @GetMapping("/reviews/{reviewId}")
     public ResponseEntity<Review> getReview(@PathVariable Long companyId,
-                            @PathVariable Long reviewId) {
+                                            @PathVariable Long reviewId) {
         Review review = reviewService.getReviewById(companyId, reviewId);
         return review != null
                 ? ResponseEntity.ok(review)
                 : ResponseEntity.notFound().build();
+    }
+
+    @PutMapping("/reviews/{reviewId}")
+    public ResponseEntity<Review> updateReview(@PathVariable Long companyId,
+                                               @PathVariable Long reviewId,
+                                               @RequestBody Review review) {
+        Review updated = reviewService.updateReview(companyId, reviewId, review);
+        return ResponseEntity.ok().body(updated);
     }
 }
