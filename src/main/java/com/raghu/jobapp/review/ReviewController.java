@@ -21,7 +21,18 @@ public class ReviewController {
 
     @PostMapping("/reviews")
     public ResponseEntity<String> addReview(@PathVariable Long companyId, @RequestBody Review review) {
-        reviewService.addReview(companyId, review);
-        return ResponseEntity.ok().body("Created Review successfully!");
+        boolean isReviewCreated = reviewService.addReview(companyId, review);
+        return isReviewCreated ?
+                ResponseEntity.ok().body("Created Review successfully!") :
+                ResponseEntity.status(404).body("Review Not created");
+    }
+
+    @GetMapping("/reviews/{reviewId}")
+    public ResponseEntity<Review> getReview(@PathVariable Long companyId,
+                            @PathVariable Long reviewId) {
+        Review review = reviewService.getReviewById(companyId, reviewId);
+        return review != null
+                ? ResponseEntity.ok(review)
+                : ResponseEntity.notFound().build();
     }
 }

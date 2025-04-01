@@ -11,8 +11,8 @@ import java.util.List;
 
 @Service
 public class ReviewServiceImpl implements ReviewService {
-    private ReviewRepository reviewRepository;
-    private CompanyService companyService;
+    private final ReviewRepository reviewRepository;
+    private final CompanyService companyService;
 
     public ReviewServiceImpl(ReviewRepository reviewRepository, CompanyService companyService) {
         this.reviewRepository = reviewRepository;
@@ -21,17 +21,27 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     public List<Review> getAllReviews(Long companyId) {
-        List<Review> reviews = reviewRepository.findByCompanyId(companyId);
-        return reviews;
+        return reviewRepository.findByCompanyId(companyId);
     }
 
     @Override
-    public Void addReview(Long companyId, Review review) {
+    public boolean addReview(Long companyId, Review review) {
         Company company = companyService.getSpecificCompanyByID(companyId);
         if (company != null) {
             review.setCompany(company);
             reviewRepository.save(review);
+            return true;
+        } else {
+            return false;
         }
-        return null;
+    }
+
+    @Override
+    public Review getReviewById(Long companyId, Long reviewId) {
+        List<Review> review = reviewRepository.findByCompanyId(companyId);
+        return review.stream()
+                .filter(eachReview -> eachReview.getId().equals(reviewId))
+                .findFirst()
+                .orElse(null);
     }
 }

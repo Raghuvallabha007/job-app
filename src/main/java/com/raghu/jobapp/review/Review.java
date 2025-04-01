@@ -20,13 +20,6 @@ public class Review {
     public Review() {
     }
 
-    public Review(Long id, String title, String description, double rating) {
-        this.id = id;
-        this.title = title;
-        this.description = description;
-        this.rating = rating;
-    }
-
     public Company getCompany() {
         return company;
     }
