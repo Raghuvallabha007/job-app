@@ -1,6 +1,7 @@
 package com.raghu.jobapp.company;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.raghu.jobapp.job.Job;
 import com.raghu.jobapp.review.Review;
 import jakarta.persistence.*;
@@ -15,8 +16,9 @@ public class Company {
     private String name;
     private String description;
 
-    @OneToMany(mappedBy = "company")
-    @JsonIgnore
+    //@JsonIgnore
+    @OneToMany(mappedBy = "company", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnoreProperties("company")
     private List<Job> jobs;
 
     @OneToMany(mappedBy = "company")
@@ -63,5 +65,16 @@ public class Company {
 
     public void setReviews(List<Review> reviews) {
         this.reviews = reviews;
+    }
+
+    @Override
+    public String toString() {
+        return "Company{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", jobs=" + jobs +
+                ", reviews=" + reviews +
+                '}';
     }
 }

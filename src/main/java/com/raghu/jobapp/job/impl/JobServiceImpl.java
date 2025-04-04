@@ -24,6 +24,7 @@ public class JobServiceImpl implements JobService {
 
     @Override
     public Void createJob(Job job) {
+        System.out.println(job.toString());
         jobRepository.save(job);
         return null;
     }

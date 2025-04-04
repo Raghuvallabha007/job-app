@@ -1,6 +1,6 @@
 package com.raghu.jobapp.job;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.raghu.jobapp.company.Company;
 import jakarta.persistence.*;
 
@@ -16,21 +16,23 @@ public class Job {
     private String maxSalary;
     private String location;
 
-    @JsonIgnore
+    //@JsonIgnore
     @ManyToOne
+    @JsonIgnoreProperties("jobs")
     private Company company;
 
     //default constructor it is mandatory
     public Job() {
     }
 
-    public Job(Long id, String title, String description, String minSalary, String maxSalary, String location) {
+    public Job(Long id, String title, String description, String minSalary, String maxSalary, String location, Company company) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.minSalary = minSalary;
         this.maxSalary = maxSalary;
         this.location = location;
+        this.company = company;
     }
 
     public Company getCompany() {
@@ -98,6 +100,7 @@ public class Job {
                 ", minSalary='" + minSalary + '\'' +
                 ", maxSalary='" + maxSalary + '\'' +
                 ", location='" + location + '\'' +
+                ", company=" + company +
                 '}';
     }
 }
